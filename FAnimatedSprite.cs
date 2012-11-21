@@ -66,18 +66,17 @@ public class FAnimatedSprite : FSprite {
 	}
 	
 	public void play(string animName, bool forced=false) {
-		// check if we are giving the same animation that is currently playing
-		if (forced && _currentAnim.name == animName) {
-			// restart at first frame
-			_currentFrame = 0;
-			_time = 0;
+		// check if we are given the same animation that is currently playing
+		if (_currentAnim.name == animName) {
+			if (forced) {
+				// restart at first frame
+				_currentFrame = 0;
+				_time = 0;
+				
+				// redraw
+				element = Futile.atlasManager.GetElementWithName(_baseName+"_"+_currentAnim.frames[0]+"."+_baseExtension);
+			}
 			
-			// redraw
-			element = Futile.atlasManager.GetElementWithName(_baseName+"_"+_currentAnim.frames[0]+"."+_baseExtension);
-			
-			return;
-		} else if (!forced && _currentAnim.name == animName) {
-			// do nothing!
 			return;
 		}
 		
