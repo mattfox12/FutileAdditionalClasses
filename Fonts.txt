@@ -1,0 +1,28 @@
+{"frames": {
+
+"Large Font.png":
+{
+	"frame": {"x":1,"y":1,"w":64,"h":60},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":64,"h":60},
+	"sourceSize": {"w":64,"h":60}
+},
+"Small Font.png":
+{
+	"frame": {"x":66,"y":1,"w":60,"h":42},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":60,"h":42},
+	"sourceSize": {"w":60,"h":42}
+}},
+"meta": {
+	"app": "http://www.texturepacker.com",
+	"version": "1.0",
+	"image": "Fonts.png",
+	"format": "RGBA8888",
+	"size": {"w":128,"h":128},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:09887de9c1a6d7cc1b22ae7bda47a2a7$"
+}
+}

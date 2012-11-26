@@ -10,28 +10,36 @@ public class SuperBurgleGame : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		FutileParams fparams = new FutileParams(true, true, false, false);
-		
 		fparams.AddResolutionLevel(480.0f, 1.0f, 1.0f, "");
-		
 		fparams.origin = new Vector2(0.5f, 0.5f);
-		
-		fparams.backgroundColor = new Color(0, 0, 0.2f);
-		
+		fparams.backgroundColor = new Color(0.15f, 0.15f, 0.3f);
 		Futile.instance.Init(fparams);
 		
+		// load image atlas
 		Futile.atlasManager.LoadAtlas("Atlases/Burglar");
 		
+		// create burglar
 		burglar = new FAnimatedSprite("Burglar");
 		burglar.scale = 2.0f;
-		// idle anim
-		int[] frames = { 1,1,2,1,1,1,10,1,11,1 };
+		int[] frames = { 1,1,2,1,1,1,10,1,11,1 }; // idle anim
 		burglar.addAnimation(new FAnimation("idle", frames, 400, true));
-		// run anim
-		int[] frames2 = { 3,4,5,6,4,7 };
+		int[] frames2 = { 3,4,5,6,4,7 }; // run anim
 		burglar.addAnimation(new FAnimation("run", frames2, 180, true));
+		Futile.stage.AddChild(burglar); // add burglar to stage
 		
-		Futile.stage.AddChild(burglar);
+		// load font atlas
+		Futile.atlasManager.LoadAtlas("Atlases/Fonts");
 		
+		// Add large font text (use only capital letters)
+		Futile.atlasManager.LoadFont("Large", "Large Font.png", "Atlases/Large Font");
+		FLabel label1 = new FLabel("Large", "LARGE FONT");
+		label1.y += 18;
+		Futile.stage.AddChild(label1);
+		
+		// Add small font text
+		Futile.atlasManager.LoadFont("Small", "Small Font.png", "Atlases/Small Font");
+		FLabel label2 = new FLabel("Small", "Small Font");
+		Futile.stage.AddChild(label2);
 	}
 	
 	// Update is called once per frame
