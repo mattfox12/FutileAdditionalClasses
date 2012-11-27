@@ -15,8 +15,15 @@ public class SuperBurgleGame : MonoBehaviour {
 		fparams.backgroundColor = new Color(0.15f, 0.15f, 0.3f);
 		Futile.instance.Init(fparams);
 		
-		// load image atlas
+		// load image atlas (within Resources/Atlases folder)
 		Futile.atlasManager.LoadAtlas("Atlases/Burglar");
+		
+		// Add tilemap 
+		FTilemap room1 = new FTilemap("Burglar Walls");
+		room1.LoadCSV("CSVs/Room1Map"); // load comma separated text file (within Resources/CSVs folder)
+		room1.x = -room1.width/2;
+		room1.y -= 4;
+		Futile.stage.AddChild(room1);
 		
 		// create burglar
 		burglar = new FAnimatedSprite("Burglar");

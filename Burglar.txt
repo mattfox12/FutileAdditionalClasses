@@ -1,8 +1,24 @@
 {"frames": {
 
+"Burglar Walls_0.png":
+{
+	"frame": {"x":2,"y":2,"w":8,"h":8},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":8,"h":8},
+	"sourceSize": {"w":8,"h":8}
+},
+"Burglar Walls_1.png":
+{
+	"frame": {"x":12,"y":2,"w":8,"h":8},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":8,"h":8},
+	"sourceSize": {"w":8,"h":8}
+},
 "Burglar_1.png":
 {
-	"frame": {"x":2,"y":2,"w":24,"h":24},
+	"frame": {"x":22,"y":2,"w":24,"h":24},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":24,"h":24},
@@ -10,7 +26,7 @@
 },
 "Burglar_10.png":
 {
-	"frame": {"x":28,"y":2,"w":24,"h":24},
+	"frame": {"x":48,"y":2,"w":24,"h":24},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":24,"h":24},
@@ -18,7 +34,7 @@
 },
 "Burglar_11.png":
 {
-	"frame": {"x":54,"y":2,"w":24,"h":24},
+	"frame": {"x":74,"y":2,"w":24,"h":24},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":24,"h":24},
@@ -26,7 +42,7 @@
 },
 "Burglar_2.png":
 {
-	"frame": {"x":80,"y":2,"w":24,"h":24},
+	"frame": {"x":100,"y":2,"w":24,"h":24},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":24,"h":24},
@@ -95,6 +111,6 @@
 	"format": "RGBA8888",
 	"size": {"w":128,"h":128},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:7ac37e378954febc0a21e6f66f312738$"
+	"smartupdate": "$TexturePacker:SmartUpdate:deb0d7035997f105462b2afee0a7371b$"
 }
 }
