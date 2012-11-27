@@ -37,7 +37,7 @@ public class SuperBurgleGame : MonoBehaviour {
 		// load font atlas
 		Futile.atlasManager.LoadAtlas("Atlases/Fonts");
 		
-		// Add large font text (use only capital letters)
+		// Add large font text
 		Futile.atlasManager.LoadFont("Large", "Large Font.png", "Atlases/Large Font");
 		FLabel label1 = new FLabel("Large", "LARGE FONT");
 		label1.y += 18;
