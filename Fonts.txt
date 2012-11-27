@@ -2,19 +2,19 @@
 
 "Large Font.png":
 {
-	"frame": {"x":1,"y":1,"w":64,"h":60},
+	"frame": {"x":1,"y":1,"w":64,"h":120},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":64,"h":60},
-	"sourceSize": {"w":64,"h":60}
+	"spriteSourceSize": {"x":0,"y":0,"w":64,"h":120},
+	"sourceSize": {"w":64,"h":120}
 },
 "Small Font.png":
 {
-	"frame": {"x":66,"y":1,"w":60,"h":42},
+	"frame": {"x":66,"y":1,"w":60,"h":49},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":60,"h":42},
-	"sourceSize": {"w":60,"h":42}
+	"spriteSourceSize": {"x":0,"y":0,"w":60,"h":49},
+	"sourceSize": {"w":60,"h":49}
 }},
 "meta": {
 	"app": "http://www.texturepacker.com",
@@ -23,6 +23,6 @@
 	"format": "RGBA8888",
 	"size": {"w":128,"h":128},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:09887de9c1a6d7cc1b22ae7bda47a2a7$"
+	"smartupdate": "$TexturePacker:SmartUpdate:6c089bb8a5fefe37dc29335d9d053914$"
 }
 }
