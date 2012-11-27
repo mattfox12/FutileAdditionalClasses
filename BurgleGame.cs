@@ -51,7 +51,6 @@ public class SuperBurgleGame : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		burglar.Update();
 		
 		_time += Time.deltaTime;
 		

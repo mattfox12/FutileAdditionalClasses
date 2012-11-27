@@ -33,8 +33,20 @@ public class FAnimatedSprite : FSprite {
 		_animations = new List<FAnimation>();
 	}
 	
+	override public void HandleAddedToStage()
+	{
+		Futile.instance.SignalUpdate += Update;
+		base.HandleAddedToStage();
+	}
+	
+	override public void HandleRemovedFromStage()
+	{
+		Futile.instance.SignalUpdate -= Update;
+		base.HandleRemovedFromStage();
+	}
+	
 	// Update is called once per frame
-	public void Update () {
+	virtual public void Update () {
 		if (_currentAnim != null && !_pause) {
 			_time += Time.deltaTime;
 		
