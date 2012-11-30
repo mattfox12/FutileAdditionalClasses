@@ -118,8 +118,8 @@ public class FTilemap : FContainer
 			// loop through the available sprites
 			foreach (FNode sprite in _childNodes) {
 				
-				float compareX = Mathf.Floor(sprite.x / (float)_tileWidth);
-				float compareY = -Mathf.Floor(sprite.y / (float)_tileHeight);
+				float compareX = Mathf.Floor((sprite.x - _tileWidth/2) / (float)_tileWidth);
+				float compareY = -Mathf.Floor((sprite.y + _tileHeight/2) / (float)_tileHeight);
 				
 				if (checkX == compareX && checkY == compareY) {
 					return sprite as FSprite;
