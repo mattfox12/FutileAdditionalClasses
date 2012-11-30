@@ -61,8 +61,8 @@ public class FTilemap : FContainer
 							}
 							
 							// offset sprite coordinates
-							sprite.x = i * _tileWidth;
-							sprite.y = -j * _tileHeight;
+							sprite.x = i * _tileWidth + _tileWidth/2;
+							sprite.y = -j * _tileHeight - _tileHeight/2;
 							
 							if (int.Parse(frame) == 0) {
 								sprite.isVisible = false;
@@ -81,8 +81,8 @@ public class FTilemap : FContainer
 		}
 		
 		// set the wide/high tile count
-		_tilesWide = i-1;
-		_tilesHigh = j-1;
+		_tilesWide = i;
+		_tilesHigh = j;
 	}
 	
 	// returns FSprite at 
