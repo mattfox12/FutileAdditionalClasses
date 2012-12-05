@@ -10,7 +10,9 @@ Get started with Futile Tutorials: http://struct.ca/futile
 =======================
 The additions:
 
-Fonts: I added three fonts for use in Futile projects. These are meant to be pixel fonts (be sure to set Fonts.png filtering to Point), drawn by myself. Feel free to use these in your projects, credit appreciated.
+Fonts
+-----
+I added three fonts for use in Futile projects. These are meant to be pixel fonts (be sure to set Fonts.png filtering to Point), drawn by myself. Feel free to use these in your projects, credit appreciated.
 
 Animation
 ---------
