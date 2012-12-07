@@ -45,26 +45,7 @@ public class FTmxMap : FContainer {
 			
 			// create FTilemap for layer nodes
 			if (child.tagName == "layer" && child.children.Count > 0) {
-				// get csv content
-				XMLNode csvData = child.children[0] as XMLNode;
-				if (csvData.attributes["encoding"] != "csv") {
-					Debug.Log ("FTiledScene: Could not render layer data, encoding set to: " + csvData.attributes["encoding"]);
-					break;
-				}
-				
-				// get text for csv data
-				string csvText = csvData.value;
-				string firstFrame = csvText.Substring( 0, csvText.IndexOf(',') );
-				int firstID = int.Parse(firstFrame);
-				
-				// find name of tileset being used
-				string baseName = this.getTilesetNameForID(firstID);
-				string baseExtension = this.getTilesetExtensionForID(firstID);
-				
-				// create tilemap
-				FTilemap tilemap = new FTilemap(baseName, baseExtension);
-				tilemap.LoadText(csvText, true);
-				AddChild(tilemap);
+				AddChild(this.createTilemap(child));
 			}
 			
 			// create FContainers for layer nodes
@@ -74,33 +55,10 @@ public class FTmxMap : FContainer {
 				
 				foreach (XMLNode fObject in child.children) {
 					if (fObject.attributes.ContainsKey("gid")) {
-						// get id numbers needed
-						int id = int.Parse(fObject.attributes["gid"]);
-						int firstID = this.getTilesetFirstIDForID(id);
-						
-						// find parts of source image
-						string baseName = this.getTilesetNameForID(id);
-						int actualFrame = id - firstID + objectStartInt;
-						string baseExtension = this.getTilesetExtensionForID(id);
-						
-						// assemble whole name
-						string wholeName = baseName + "_" + actualFrame + "." + baseExtension;
-						
-						// get x,y
-						int x = int.Parse(fObject.attributes["x"]);
-						int y = int.Parse(fObject.attributes["y"]);
-						
 						// create FSprite (override that function for specific class changes)
-						objectGroup.AddChild(this.createTileObject(wholeName, x, y));
+						objectGroup.AddChild(this.createTileObject(fObject));
 					} else if (fObject.attributes.ContainsKey("type")) {
-						// type
-						string type = fObject.attributes["type"];
-						
-						// get x,y
-						int x = int.Parse(fObject.attributes["x"]);
-						int y = int.Parse(fObject.attributes["y"]);
-						
-						objectGroup.AddChild(this.createObject(type, x, y));
+						objectGroup.AddChild(this.createObject(fObject));
 					}
 				}
 				
@@ -186,8 +144,65 @@ public class FTmxMap : FContainer {
 		return startIndex;
 	}
 	
-	virtual protected FNode createTileObject(string name, int givenX, int givenY) 
+	virtual protected FNode createTilemap(XMLNode node) {
+		XMLNode csvData = new XMLNode();
+		XMLNode properties = new XMLNode();
+		foreach (XMLNode child in node.children) {
+			if (child.tagName == "data") {
+				csvData = child;
+			} else if (child.tagName == "properties") {
+				properties = child;
+			}
+		}
+		
+		// make sure encoding is set to csv
+		if (csvData.attributes["encoding"] != "csv") {
+			Debug.Log ("FTiledScene: Could not render layer data, encoding set to: " + csvData.attributes["encoding"]);
+			return null;
+		}
+		
+		// do stuff with properties
+		foreach (XMLNode property in properties.children) {
+			// check each property
+			if (property.attributes["name"] == "something") {
+				// do something with property.attributes["value"];
+			}
+		}
+		
+		// get text for csv data
+		string csvText = csvData.value;
+		string firstFrame = csvText.Substring( 0, csvText.IndexOf(',') );
+		int firstID = int.Parse(firstFrame);
+		
+		// find name of tileset being used, assumes all tiles are from the same tileset
+		string baseName = this.getTilesetNameForID(firstID);
+		string baseExtension = this.getTilesetExtensionForID(firstID);
+		
+		// create tilemap
+		FTilemap tilemap = new FTilemap(baseName, baseExtension);
+		tilemap.LoadText(csvText, true);
+
+		return tilemap;
+	}
+	
+	virtual protected FNode createTileObject(XMLNode node) 
 	{
+		// get id numbers needed
+		int id = int.Parse(node.attributes["gid"]);
+		int firstID = this.getTilesetFirstIDForID(id);
+		
+		// find parts of source image
+		string baseName = this.getTilesetNameForID(id);
+		int actualFrame = id - firstID + objectStartInt;
+		string baseExtension = this.getTilesetExtensionForID(id);
+		
+		// assemble whole name
+		string name = baseName + "_" + actualFrame + "." + baseExtension;
+		
+		// get x,y
+		int givenX = int.Parse(node.attributes["x"]);
+		int givenY = int.Parse(node.attributes["y"]);
+		
 		FSprite sprite = new FSprite(name);
 		sprite.x = givenX + sprite.width / 2;
 		sprite.y = -givenY + sprite.height / 2;
@@ -195,8 +210,15 @@ public class FTmxMap : FContainer {
 		return sprite;
 	}
 	
-	virtual protected FNode createObject(string type, int givenX, int givenY) 
+	virtual protected FNode createObject(XMLNode node) 
 	{
+		// type
+		string type = node.attributes["type"];
+		
+		// get x,y
+		int givenX = int.Parse(node.attributes["x"]);
+		int givenY = int.Parse(node.attributes["y"]);
+		
 		FSprite sprite = new FSprite(type);
 		sprite.x = givenX + sprite.width / 2;
 		sprite.y = -givenY + sprite.height / 2;
