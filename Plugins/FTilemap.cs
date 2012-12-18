@@ -22,21 +22,12 @@ public class FTilemap : FContainer
 		_baseExtension = elementExtension;
 	}
 	
-	// skip zero lets us save resources by not adding tiles for the number 0
-	// if you need to be able to change empty tiles later, set skipZero to false
-	public void LoadCSV (string textFile, bool skipZero=true) {
-		TextAsset dataAsset = (TextAsset) Resources.Load (textFile, typeof(TextAsset));
-		if(!dataAsset)
-		{
-			Debug.Log ("Futile: Couldn't load the atlas data from: " + textFile);
-		}
-		string fileContents = dataAsset.ToString();
-		Resources.UnloadAsset(dataAsset);
+	public void LoadText (string text, bool skipZero=true) {
 		
 		// remember for later
 		_skipZero = skipZero;
 		
-		string[] lines = fileContents.Split('\n');
+		string[] lines = text.Split('\n');
 		int i = 0;
 		int j = 0;
 		foreach (string line in lines) {
@@ -83,6 +74,20 @@ public class FTilemap : FContainer
 		// set the wide/high tile count
 		_tilesWide = i;
 		_tilesHigh = j;
+	}
+	
+	// skip zero lets us save resources by not adding tiles for the number 0
+	// if you need to be able to change empty tiles later, set skipZero to false
+	public void LoadCSV (string textFile, bool skipZero=true) {
+		TextAsset dataAsset = (TextAsset) Resources.Load (textFile, typeof(TextAsset));
+		if(!dataAsset)
+		{
+			Debug.Log ("FTilemap: Couldn't load the atlas data from: " + textFile);
+		}
+		string fileContents = dataAsset.ToString();
+		Resources.UnloadAsset(dataAsset);
+		
+		this.LoadText(fileContents, skipZero);
 	}
 	
 	// returns FSprite at 
