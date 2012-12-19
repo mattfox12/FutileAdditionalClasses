@@ -10,6 +10,10 @@ Get started with Futile Tutorials: http://struct.ca/futile
 =======================
 The additions:
 
+Camera/HUD
+________
+FCamObject: Extends FContainer, use to display HUD elements and move the camera around. Follow a specific FNode object using follow(FNode). Shake screen with shake(float). HandleResize() is there to help you reposition elements on resize or orientation change. Use setWorldBounds(Rect) to limit the camera movement within your stage. Use setBounds(Rect) to create dead space around the FNode that it is following.
+
 Fonts
 -----
 I added three fonts for use in Futile projects. These are meant to be pixel fonts (be sure to set Fonts.png filtering to Point), drawn by myself. Feel free to use these in your projects, credit appreciated.
