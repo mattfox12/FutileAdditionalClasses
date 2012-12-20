@@ -65,15 +65,20 @@ public class FCamObject : FContainer {
 				} else if (_followObject.x < x + _bounds.xMin) {
 					x = _followObject.x + _bounds.width / 2;
 				}
-			} else if (_bounds.height > 0) {
+			} else {
+				// follow directly
+				x = _followObject.x;
+			}
+			if (_bounds.height > 0) {
 				if (_followObject.y > y + _bounds.yMax) {
+					//Debug.Log(_followObject.y + " > " + (y + _bounds.yMax));
 					y = _followObject.y - _bounds.height / 2;
 				} else if (_followObject.y < y + _bounds.yMin) {
+					//Debug.Log(_followObject.y + " < " + (y + _bounds.yMin));
 					y = _followObject.y + _bounds.height / 2;
 				}
 			} else {
 				// follow directly
-				x = _followObject.x;
 				y = _followObject.y;
 			}
 		}
