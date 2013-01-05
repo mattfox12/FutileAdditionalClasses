@@ -6,16 +6,14 @@ using System.Collections.Generic;
 public class FTmxMap : FContainer {
 	
 	private List<XMLNode> _tilesets;
+	private List<string> _layerNames;
 	
 	public int objectStartInt = 1;
 
 	public FTmxMap ()
 	{
 		_tilesets = new List<XMLNode>();
-		
-		// starts tilemap in upper left corner
-		this.x = -Futile.screen.halfWidth;
-		this.y = Futile.screen.halfHeight;
+		_layerNames = new List<string>();
 	}
 	
 	public void LoadTMX(string fileName) 
@@ -50,26 +48,14 @@ public class FTmxMap : FContainer {
 			
 			// create FContainers for layer nodes
 			if (child.tagName == "objectgroup") {
-				// add objects to FContainers
-				FContainer objectGroup = new FContainer();
-				
-				foreach (XMLNode fObject in child.children) {
-					if (fObject.attributes.ContainsKey("gid")) {
-						// create FSprite (override that function for specific class changes)
-						objectGroup.AddChild(this.createTileObject(fObject));
-					} else if (fObject.attributes.ContainsKey("type")) {
-						objectGroup.AddChild(this.createObject(fObject));
-					}
-				}
-				
-				// add to self
-				AddChild(objectGroup);
+				AddChild(this.createObjectLayer(child));
 			}
 		}
 		
 	}
 	
-	private string getTilesetNameForID(int num) {
+	protected string getTilesetNameForID(int num) 
+	{
 		if (_tilesets.Count < 1) {
 			Debug.Log("FTiledScene: No Tilesets found.");
 			return "";
@@ -95,7 +81,8 @@ public class FTmxMap : FContainer {
 		return returnValue;
 	}
 	
-	private string getTilesetExtensionForID(int num) {
+	protected string getTilesetExtensionForID(int num) 
+	{
 		if (_tilesets.Count < 1) {
 			Debug.Log("FTiledScene: No Tilesets found.");
 			return "";
@@ -121,7 +108,8 @@ public class FTmxMap : FContainer {
 		return returnValue;
 	}
 	
-	private int getTilesetFirstIDForID(int num) {
+	protected int getTilesetFirstIDForID(int num) 
+	{
 		if (_tilesets.Count < 1) {
 			Debug.Log("FTiledScene: No Tilesets found.");
 			return -1;
@@ -144,7 +132,31 @@ public class FTmxMap : FContainer {
 		return startIndex;
 	}
 	
-	virtual protected FNode createTilemap(XMLNode node) {
+	virtual protected FNode createObjectLayer(XMLNode node)
+	{
+		// add objects to FContainers
+		FContainer objectGroup = new FContainer();
+		
+		foreach (XMLNode fObject in node.children) {
+			if (fObject.tagName == "object") {
+				if (fObject.attributes.ContainsKey("gid")) {
+					// create FSprite (override that function for specific class changes)
+					objectGroup.AddChild(this.createTileObject(fObject));
+				} else {
+					objectGroup.AddChild(this.createObject(fObject));
+				}
+			}
+		}
+		
+		// remember name 
+		_layerNames.Add (node.attributes["name"]);
+		
+		// add to self
+		return objectGroup;
+	}
+	
+	virtual protected FNode createTilemap(XMLNode node) 
+	{
 		XMLNode csvData = new XMLNode();
 		XMLNode properties = new XMLNode();
 		foreach (XMLNode child in node.children) {
@@ -160,6 +172,9 @@ public class FTmxMap : FContainer {
 			Debug.Log ("FTiledScene: Could not render layer data, encoding set to: " + csvData.attributes["encoding"]);
 			return null;
 		}
+		
+		// remember name 
+		_layerNames.Add (node.attributes["name"]);
 		
 		// do stuff with properties
 		foreach (XMLNode property in properties.children) {
@@ -226,4 +241,17 @@ public class FTmxMap : FContainer {
 		return sprite;
 	}
 	
+	public FNode getLayerNamed(string name) 
+	{
+		int i = 0;
+		foreach (string check in _layerNames) {
+			if (check == name) {
+				return GetChildAt(i);
+			}
+			 i++;
+		}
+		//
+		Debug.Log("No layer named " + name + " found.");
+		return null;
+	}
 }
