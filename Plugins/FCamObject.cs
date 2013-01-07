@@ -99,7 +99,7 @@ public class FCamObject : FContainer {
 				y = (_worldBounds.height / 2) + _worldBounds.y;
 			} else if (y < _worldBounds.yMin + Futile.screen.halfHeight) {
 				y = _worldBounds.yMin + Futile.screen.halfHeight;
-			} else if (x > _worldBounds.yMax - Futile.screen.halfHeight) {
+			} else if (y > _worldBounds.yMax - Futile.screen.halfHeight) {
 				y = _worldBounds.yMax - Futile.screen.halfHeight;
 			}
 		}
