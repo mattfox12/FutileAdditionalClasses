@@ -20,13 +20,14 @@ public class FCamObject : FContainer {
 	protected float _shakeIntensity;
 	protected bool _shakeIncludeHUD;
 	
-	public FCamObject ()
+	public FCamObject () : base()
 	{		
 		_bounds = new Rect(-5,-5,10,10);
 		
 		_worldBounds = new Rect(0,0,0,0);
 		
 		_shakeIncludeHUD = true;
+		
 	}
 	
 	override public void HandleAddedToStage()
@@ -38,6 +39,13 @@ public class FCamObject : FContainer {
 	
 	override public void HandleRemovedFromStage()
 	{
+		// reset to zero
+		_followObject = null;
+		_worldBounds.width = 0;
+		_worldBounds.height = 0;
+		x = 0;
+		y = 0;
+		
 		Futile.screen.SignalResize -= this.HandleResize;
 		Futile.instance.SignalUpdate -= Update;
 		base.HandleRemovedFromStage();
@@ -103,6 +111,10 @@ public class FCamObject : FContainer {
 				y = _worldBounds.yMax - Futile.screen.halfHeight;
 			}
 		}
+		
+		// round values, sometimes needed for pixel art
+		//x = Mathf.Round(x * Futile.displayScale) / Futile.displayScale;
+		//y = Mathf.Round(y * Futile.displayScale) / Futile.displayScale;
 		
 		// shake
 		_shakeOffset = new Vector2(0,0);
@@ -171,6 +183,10 @@ public class FCamObject : FContainer {
 	public void setWorldBounds(Rect givenRect) 
 	{
 		_worldBounds = givenRect;
+	}
+	
+	public Rect getWorldBounds() {
+		return _worldBounds;
 	}
 	
 	public void setBounds(Rect givenRect) 
