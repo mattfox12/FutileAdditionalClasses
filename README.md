@@ -14,6 +14,8 @@ Camera/HUD
 ----------
 FCamObject: Extends FContainer, use to display HUD elements and move the camera around. Follow a specific FNode object using follow(FNode). Shake screen with shake(float). HandleResize() is there to help you reposition elements on resize or orientation change. Use setWorldBounds(Rect) to limit the camera movement within your stage. Use setBounds(Rect) to create dead space around the FNode that it is following.
 
+FParallaxContainer: Extends FContainer, use in same scene as FCamObject to give the illusion of depth. Set the cam equal to an FCamObject, size to the size of the layer you want to display. If the size is less than the screen FParallaxContainer will stay centered. If size greater than screen & less than worldBounds, FParallaxContainer will move slower than the FCamObject. If the size is greater than worldBounds, FParallaxContainer will move faster than FCamObject. The worldBounds of the FCamObject must be set for this to work.
+
 Fonts
 -----
 I added three fonts for use in Futile projects. These are meant to be pixel fonts (be sure to set Fonts.png filtering to Point), drawn by myself. Feel free to use these in your projects, credit appreciated.
