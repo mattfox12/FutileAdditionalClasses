@@ -6,7 +6,9 @@ using System.Collections.Generic;
 public class FTmxMap : FContainer {
 	
 	private List<XMLNode> _tilesets;
-	private List<string> _layerNames;
+	protected List<string> _layerNames;
+	
+	private FNode _clipNode; // for tilemaps
 	
 	public int objectStartInt = 1;
 
@@ -176,11 +178,14 @@ public class FTmxMap : FContainer {
 		// remember name 
 		_layerNames.Add (node.attributes["name"]);
 		
+		// skipZero, if this is true all filled tiles will be drawn without clipping
+		bool skipZero = false;
+		
 		// do stuff with properties
 		foreach (XMLNode property in properties.children) {
 			// check each property
-			if (property.attributes["name"] == "something") {
-				// do something with property.attributes["value"];
+			if (property.attributes["name"] == "skipZero") {
+				skipZero = bool.Parse(property.attributes["value"]);
 			}
 		}
 		
@@ -195,7 +200,11 @@ public class FTmxMap : FContainer {
 		
 		// create tilemap
 		FTilemap tilemap = new FTilemap(baseName, baseExtension);
-		tilemap.LoadText(csvText, true);
+		if (!skipZero) {
+			tilemap.clipToScreen = true;
+			tilemap.clipNode = _clipNode;
+		}
+		tilemap.LoadText(csvText, skipZero);
 
 		return tilemap;
 	}
@@ -253,5 +262,10 @@ public class FTmxMap : FContainer {
 		//
 		Debug.Log("No layer named " + name + " found.");
 		return null;
+	}
+	
+	public FNode clipNode {
+		get { return _clipNode; }
+		set { _clipNode = value; }
 	}
 }
