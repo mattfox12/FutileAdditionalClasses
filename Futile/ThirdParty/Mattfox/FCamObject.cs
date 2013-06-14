@@ -22,19 +22,15 @@ public class FCamObject : FContainer {
 	
 	public FCamObject () : base()
 	{		
+		this.ListenForUpdate(Update);
+		this.ListenForResize(HandleResize);
+		
 		_bounds = new Rect(-5,-5,10,10);
 		
 		_worldBounds = new Rect(0,0,0,0);
 		
 		_shakeIncludeHUD = true;
 		
-	}
-	
-	override public void HandleAddedToStage()
-	{
-		Futile.screen.SignalResize += this.HandleResize;
-		Futile.instance.SignalUpdate += Update;
-		base.HandleAddedToStage();
 	}
 	
 	override public void HandleRemovedFromStage()
@@ -46,8 +42,6 @@ public class FCamObject : FContainer {
 		x = 0;
 		y = 0;
 		
-		Futile.screen.SignalResize -= this.HandleResize;
-		Futile.instance.SignalUpdate -= Update;
 		base.HandleRemovedFromStage();
 	}
 	

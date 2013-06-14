@@ -15,34 +15,32 @@ public class FAnimatedSprite : FSprite {
 	
 	protected FAnimation _currentAnim;
 	
-	protected FAnimatedSprite() : base() //for overriding
-	{
+	[Obsolete("use FAnimatedSprite(string elementBase) instead")]
+	public FAnimatedSprite  (string elementBase, string elementExtension) {
+		ListenForUpdate(Update);
 		
-	}
-	
-	public FAnimatedSprite (string elementBase, string elementExtension="png") : base()
-	{
 		_baseName = elementBase;
-		_baseExtension = elementExtension;
 		
 		// default to first frame, no animation
-		Init(Futile.atlasManager.GetElementWithName(_baseName+"_1."+_baseExtension),1); // expects individual frames, in convention of NAME_#.EXT
+		Init(FFacetType.Quad, Futile.atlasManager.GetElementWithName(_baseName+"_1"),1); // expects individual frames, in convention of NAME_#.EXT
 		_isAlphaDirty = true;
 		UpdateLocalVertices();
 		
 		_animations = new List<FAnimation>();
 	}
 	
-	override public void HandleAddedToStage()
+	public FAnimatedSprite (string elementBase) : base() 
 	{
-		Futile.instance.SignalUpdate += Update;
-		base.HandleAddedToStage();
-	}
-	
-	override public void HandleRemovedFromStage()
-	{
-		Futile.instance.SignalUpdate -= Update;
-		base.HandleRemovedFromStage();
+		ListenForUpdate(Update);
+		
+		_baseName = elementBase;
+		
+		// default to first frame, no animation
+		Init(FFacetType.Quad, Futile.atlasManager.GetElementWithName(_baseName+"_1"),1); // expects individual frames, in convention of NAME_#.EXT
+		_isAlphaDirty = true;
+		UpdateLocalVertices();
+		
+		_animations = new List<FAnimation>();
 	}
 	
 	// Update is called once per frame
@@ -58,9 +56,12 @@ public class FAnimatedSprite : FSprite {
 					} else {
 						_currentFrame = _currentAnim.totalFrames - 1;
 					}
+					
+					// send Signal if it exists
+					_currentAnim.checkFinished();
 				}
 				
-				element = Futile.atlasManager.GetElementWithName(_baseName+"_"+_currentAnim.frames[_currentFrame]+"."+_baseExtension);
+				element = Futile.atlasManager.GetElementWithName(_baseName+"_"+_currentAnim.frames[_currentFrame]);
 				
 				_time -= (float)_currentAnim.delay / 1000.0f;
 			}
@@ -86,7 +87,7 @@ public class FAnimatedSprite : FSprite {
 				_time = 0;
 				
 				// redraw
-				element = Futile.atlasManager.GetElementWithName(_baseName+"_"+_currentAnim.frames[0]+"."+_baseExtension);
+				element = Futile.atlasManager.GetElementWithName(_baseName+"_"+_currentAnim.frames[0]);
 			}
 			
 			return;
@@ -100,7 +101,7 @@ public class FAnimatedSprite : FSprite {
 				_time = 0;
 				
 				// force redraw to first frame
-				element = Futile.atlasManager.GetElementWithName(_baseName+"_"+anim.frames[0]+"."+_baseExtension);
+				element = Futile.atlasManager.GetElementWithName(_baseName+"_"+anim.frames[0]);
 				
 				break;
 			}
@@ -120,16 +121,23 @@ public class FAnimatedSprite : FSprite {
 		set { _baseName = value; }
 	}
 	
-	public string baseExtension {
-		get { return _baseExtension; }
-		set { _baseExtension = value; }
-	}
-	
 	public FAnimation currentAnim {
 		get { return _currentAnim; }
 	}
 	
+	public int currentFrame {
+		get {
+			return currentAnim.frames[_currentFrame];
+		}
+	}
+	
 	public bool isPaused {
 		get { return _pause; }
+	}
+	
+	[Obsolete("baseExtension is unnecessary and unused")]
+	public string baseExtension {
+		get { return _baseExtension; }
+		set { _baseExtension = value; }
 	}
 }

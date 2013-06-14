@@ -20,6 +20,8 @@ public class TmxExample : MonoBehaviour {
 		
 		// Add tilemap 
 		FTmxMap tmx1 = new FTmxMap();
+		tmx1.x = -120;
+		tmx1.y = 80;
 		tmx1.LoadTMX("CSVs/testTmx"); // load tmx text file (within Resources/CSVs folder)
 		Futile.stage.AddChild(tmx1);
 		
@@ -36,19 +38,19 @@ public class TmxExample : MonoBehaviour {
 		Futile.atlasManager.LoadAtlas("Atlases/Fonts");
 		
 		// Add large font text
-		Futile.atlasManager.LoadFont("Large", "Large Font.png", "Atlases/Large Font");
+		Futile.atlasManager.LoadFont("Large", "Large Font", "Atlases/Large Font");
 		FLabel label1 = new FLabel("Large", "LARGE FONT");
 		label1.y = 26;
 		Futile.stage.AddChild(label1);
 		
 		// Add small font text
-		Futile.atlasManager.LoadFont("Small", "Small Font.png", "Atlases/Small Font");
+		Futile.atlasManager.LoadFont("Small", "Small Font", "Atlases/Small Font");
 		FLabel label2 = new FLabel("Small", "Small Font");
 		label2.y = 12;
 		Futile.stage.AddChild(label2);
 		
 		// Add tiny font text
-		Futile.atlasManager.LoadFont("Tiny", "Tiny Font.png", "Atlases/Tiny Font");
+		Futile.atlasManager.LoadFont("Tiny", "Tiny Font", "Atlases/Tiny Font");
 		FLabel label3 = new FLabel("Tiny", "Tiny Font");
 		label3.y = 3;
 		Futile.stage.AddChild(label3);

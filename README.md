@@ -1,7 +1,7 @@
 FutileAdditionalClasses
 =======================
 
-Classes to do things I want in Futile, that may not yet be a part of the official repo. I arranged these files to match the Assets directory for a Unity project. 
+Classes to do things I want in Futile, that may not yet be a part of the official repo. I arranged these files to match the Assets directory for a Unity project. Updated for Futile version 0.91b
 
 Get Futile: https://github.com/MattRix/Futile
 Get Unity: http://unity3d.com
@@ -24,11 +24,11 @@ Animation
 ---------
 FAnimation: Holds frames, timing, and looping information.
 
-FAnimatingSprite: Extends FSprite to display animating image. Add multiple FAnimations, then call them with play(NAME). Expects individual images in your texture atlas in the format NAME_#.png.
+FAnimatingSprite: Extends FSprite to display animating image. Add multiple FAnimations, then call them with play(NAME). Expects individual images in your texture atlas in the format NAME_#.
 
 Tilemaps
 --------
-FTilemap: Extends FContainer, creates an array of FSprites based on a comma separated text file (csv). Expects individual images in your texture atlas in the format NAME_#.png. # matches the frame number in the csv file. A frame of zero (0) will be skipped by default.
+FTilemap: Extends FContainer, creates an array of FSprites based on a comma separated text file (csv). Expects individual images in your texture atlas in the format NAME_#. # matches the frame number in the csv file. A frame of zero (0) will be skipped by default.
 
 TilemapExample.cs is an example file for your Unity project which includes uses of FTilemap, FAnimatingSprite and all three fonts.
 

@@ -36,7 +36,6 @@ public class FTmxMap : FContainer {
 		
 		// loop through all children
 		foreach (XMLNode child in rootNode.children) {
-			//Debug.Log ("FTiledScene: Node[]: " + child.tagName);
 			
 			// save references to tilesets
 			if (child.tagName == "tileset") {
@@ -145,7 +144,10 @@ public class FTmxMap : FContainer {
 					// create FSprite (override that function for specific class changes)
 					objectGroup.AddChild(this.createTileObject(fObject));
 				} else {
-					objectGroup.AddChild(this.createObject(fObject));
+					FNode newObject = this.createObject(fObject);
+					if (newObject != null) {
+						objectGroup.AddChild(newObject);
+					}
 				}
 			}
 		}
@@ -196,10 +198,9 @@ public class FTmxMap : FContainer {
 		
 		// find name of tileset being used, assumes all tiles are from the same tileset
 		string baseName = this.getTilesetNameForID(firstID);
-		string baseExtension = this.getTilesetExtensionForID(firstID);
 		
 		// create tilemap
-		FTilemap tilemap = new FTilemap(baseName, baseExtension);
+		FTilemap tilemap = new FTilemap(baseName);
 		if (!skipZero) {
 			tilemap.clipToScreen = true;
 			tilemap.clipNode = _clipNode;
@@ -218,10 +219,9 @@ public class FTmxMap : FContainer {
 		// find parts of source image
 		string baseName = this.getTilesetNameForID(id);
 		int actualFrame = id - firstID + objectStartInt;
-		string baseExtension = this.getTilesetExtensionForID(id);
 		
 		// assemble whole name
-		string name = baseName + "_" + actualFrame + "." + baseExtension;
+		string name = baseName + "_" + actualFrame;
 		
 		// get x,y
 		int givenX = int.Parse(node.attributes["x"]);
@@ -243,7 +243,11 @@ public class FTmxMap : FContainer {
 		int givenX = int.Parse(node.attributes["x"]);
 		int givenY = int.Parse(node.attributes["y"]);
 		
-		FSprite sprite = new FSprite(type);
+		// remove extension from type
+		int startIndex = type.LastIndexOf('/') + 1;
+		string spriteElement = type.Substring( startIndex , type.LastIndexOf('.') - startIndex);
+		
+		FSprite sprite = new FSprite(spriteElement);
 		sprite.x = givenX + sprite.width / 2;
 		sprite.y = -givenY + sprite.height / 2;
 		

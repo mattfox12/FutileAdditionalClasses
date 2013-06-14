@@ -25,19 +25,13 @@ public class FParallaxContainer : FContainer {
 		// default to screen size, won't move then
 		_size = new Vector2(Futile.screen.width, Futile.screen.height);
 		
-	}
-	
-	override public void HandleAddedToStage()
-	{
-		Futile.instance.SignalLateUpdate += LateUpdate;
-		base.HandleAddedToStage();
+		ListenForLateUpdate(LateUpdate);
 	}
 	
 	override public void HandleRemovedFromStage()
 	{
 		_cam = null;
 		
-		Futile.instance.SignalLateUpdate -= LateUpdate;
 		base.HandleRemovedFromStage();
 	}
 	
