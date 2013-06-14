@@ -245,7 +245,12 @@ public class FTmxMap : FContainer {
 		
 		// remove extension from type
 		int startIndex = type.LastIndexOf('/') + 1;
-		string spriteElement = type.Substring( startIndex , type.LastIndexOf('.') - startIndex);
+		int endIndex = type.LastIndexOf('.');
+		int length = endIndex - startIndex;
+		if (length < 0) {
+			length = type.Length - startIndex;
+		}
+		string spriteElement = type.Substring( startIndex , length);
 		
 		FSprite sprite = new FSprite(spriteElement);
 		sprite.x = givenX + sprite.width / 2;
